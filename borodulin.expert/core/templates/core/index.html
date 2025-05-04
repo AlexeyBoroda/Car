@@ -26,9 +26,9 @@
             <img src="{% static 'core/img/hero/hero.png' %}" alt="Алексей Бородулин">
         </div>
         <div class="hero-proto-content">
-            <div class="hero-proto-title">30 лет в банках.<br>15 лет в бизнесе.</div>
-            <div class="hero-proto-subtitle">Помогаю запустить своё дело с уверенностью.</div>
-            <div class="hero-proto-desc">Пройди путь предприниматель честно — без иллюзий, с поддержкой на каждом этапе.</div>
+            <div class="hero-proto-title">30 лет в банках<br>15 лет в бизнесе</div>
+            <div class="hero-proto-subtitle">Помогаю запустить своё дело с уверенностью</div>
+            <div class="hero-proto-desc">Пройди путь предприниматель честно — без иллюзий, с поддержкой на каждом этапе</div>
             <div class="hero-proto-btns">
                 <a href="/services/" class="btn-red">Хочу начать бизнес</a>
                 <a href="/videos/" class="btn-blue">Посмотреть видео</a>
@@ -198,6 +198,17 @@
         </div>
     </section>
 </div>
+
+<!-- Секция подписки на соцсети -->
+<section class="subscribe-section" style="margin:48px 0 0 0; text-align:center;">
+    <div class="subscribe-title" style="font-size:1.25em; font-weight:700; color:#183153; margin-bottom:18px;">Подпишись и не потеряй</div>
+    <div class="subscribe-btns" style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:10px;">
+        <a href="https://t.me/Borodulin_expert" target="_blank" class="subscribe-btn">Telegram</a>
+        <a href="https://www.youtube.com/@Borodulin.expert" target="_blank" class="subscribe-btn">YouTube</a>
+        <a href="https://vk.com/borodulin.expert" target="_blank" class="subscribe-btn">VK</a>
+    </div>
+    <div class="subscribe-caption" style="font-size:0.97em; color:#888;">Без спама. Только польза и поддержка.</div>
+</section>
 
 <style>
 .hero-proto {
@@ -539,6 +550,23 @@
 }
 @media (max-width: 900px) {
     .business-tools-cards { grid-template-columns: 1fr; gap: 12px; }
+}
+.subscribe-btn {
+    background: #0a3569;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 28px;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    min-width: 120px;
+    display: inline-block;
+}
+.subscribe-btn:hover, .subscribe-btn:focus {
+    background: #FF0000;
+    color: #fff;
 }
 </style>
 {% endblock %} 

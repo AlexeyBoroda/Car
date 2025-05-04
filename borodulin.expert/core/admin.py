@@ -28,3 +28,12 @@ class SeoSettingsAdmin(admin.ModelAdmin):
             self.message_user(request, f"Ошибка при копировании: {str(e)}", messages.ERROR)
     
     copy_seo_settings.short_description = "Копировать выбранные настройки SEO"
+
+# Подключение кастомного CSS для админки
+class CustomAdminSite(admin.AdminSite):
+    class Media:
+        css = {
+            'all': ('core/admin_custom.css',)
+        }
+
+admin.site.__class__.Media = CustomAdminSite.Media
