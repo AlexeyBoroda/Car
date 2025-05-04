@@ -1,0 +1,450 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ SEO.title|default:SEO_DEFAULTS.title }}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{{ SEO.description|default:SEO_DEFAULTS.description }}{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}{{ SEO.keywords|default:SEO_DEFAULTS.keywords }}{% endblock %}">
+    <meta name="robots" content="{% block robots %}{{ SEO.robots|default:SEO_DEFAULTS.robots }}{% endblock %}">
+    <meta name="author" content="{% block author %}{{ SEO.author|default:SEO_DEFAULTS.author }}{% endblock %}">
+    <meta http-equiv="Content-Language" content="ru">
+    <meta name="theme-color" content="#003366">
+    <link rel="icon" type="image/png" href="{% static 'core/img/favicon.png' %}">
+    <link rel="canonical" href="{% block canonical %}{{ SEO.canonical|default:SEO_DEFAULTS.canonical }}{% endblock %}">
+    <!-- Open Graph -->
+    <meta property="og:type" content="{% block og_type %}{{ SEO.og_type|default:SEO_DEFAULTS.og_type }}{% endblock %}">
+    <meta property="og:site_name" content="{% block og_site_name %}{{ SEO.og_site_name|default:SEO_DEFAULTS.og_site_name }}{% endblock %}">
+    <meta property="og:locale" content="{% block og_locale %}{{ SEO.og_locale|default:SEO_DEFAULTS.og_locale }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ SEO.og_title|default:SEO_DEFAULTS.og_title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ SEO.og_description|default:SEO_DEFAULTS.og_description }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% if SEO.og_image %}{{ SEO.og_image.url }}{% else %}{{ SEO_DEFAULTS.og_image }}{% endif %}{% endblock %}">
+    <meta property="og:image:width" content="{% block og_image_width %}{{ SEO.og_image_width|default:SEO_DEFAULTS.og_image_width|default:'800' }}{% endblock %}">
+    <meta property="og:image:height" content="{% block og_image_height %}{{ SEO.og_image_height|default:SEO_DEFAULTS.og_image_height|default:'600' }}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ SEO.og_url|default:SEO_DEFAULTS.og_url }}{% endblock %}">
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="{% block twitter_card %}{{ SEO.twitter_card|default:SEO_DEFAULTS.twitter_card }}{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ SEO.og_title|default:SEO_DEFAULTS.og_title }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ SEO.og_description|default:SEO_DEFAULTS.og_description }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% if SEO.og_image %}{{ SEO.og_image.url }}{% else %}{{ SEO_DEFAULTS.og_image }}{% endif %}{% endblock %}">
+    <meta name="twitter:site" content="{% block twitter_site %}{{ SEO.twitter_site|default:SEO_DEFAULTS.twitter_site }}{% endblock %}">
+    <!-- Schema.org JSON-LD -->
+    {% if SEO.schema_jsonld or SEO_DEFAULTS.schema_jsonld %}
+    <script type="application/ld+json">
+    {{ SEO.schema_jsonld|default:SEO_DEFAULTS.schema_jsonld|safe }}
+    </script>
+    {% endif %}
+    {% if SEO.custom_meta or SEO_DEFAULTS.custom_meta %}
+    {{ SEO.custom_meta|default:SEO_DEFAULTS.custom_meta|safe }}
+    {% endif %}
+    <!-- End SEO -->
+    <style>
+        html { box-sizing: border-box; }
+        *, *:before, *:after { box-sizing: inherit; }
+        body { font-family: 'Open Sans', Arial, sans-serif; background: #fff; color: #003366; margin: 0; }
+        a { color: #003366; text-decoration: none; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .section { margin: 48px 0 0 0; padding: 0 0 32px 0; border-bottom: 1px solid #e0e0e0; }
+        .section:last-child { border-bottom: none; }
+        header.hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; background: #fff; padding: 40px 0 32px 0; border-bottom: 1px solid #e0e0e0; }
+        .hero-img { flex: 1 1 320px; min-width: 240px; text-align: center; }
+        .hero-img img { width: 260px; border-radius: 12px; }
+        .hero-content { flex: 2 1 400px; min-width: 260px; padding-left: 32px; }
+        .hero-title { font-size: 2.2em; font-weight: 700; margin-bottom: 16px; }
+        .hero-subtitle { font-size: 1.1em; margin-bottom: 24px; }
+        .hero-btns { margin-bottom: 8px; }
+        .btn-red, .btn-blue, .route-btn, .tools-btn, .subscribe-btn, .footer-cta {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-red {
+            background: #FF0000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 28px;
+            font-size: 1.1em;
+            margin-right: 12px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-red:hover, .btn-red:focus { background: #cc0000; }
+        .btn-red:active { background: #990000; }
+        .btn-blue {
+            background: #fff;
+            color: #003366;
+            border: 2px solid #003366;
+            border-radius: 6px;
+            padding: 14px 28px;
+            font-size: 1.1em;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .btn-blue:hover, .btn-blue:focus {
+            background: #003366;
+            color: #fff;
+        }
+        .btn-blue:active {
+            background: #001a33;
+            color: #fff;
+            border-color: #001a33;
+        }
+        .route-btn {
+            background: #fff;
+            color: #003366;
+            border: 2px solid #003366;
+            border-radius: 6px;
+            padding: 14px 0;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .route-btn:hover, .route-btn:focus {
+            background: #003366;
+            color: #fff;
+            border-color: #003366;
+        }
+        .route-btn:active {
+            background: #001a33;
+            color: #fff;
+            border-color: #001a33;
+        }
+        .tools-btn {
+            background: #FF0000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 32px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .tools-btn:hover, .tools-btn:focus { background: #cc0000; }
+        .tools-btn:active { background: #990000; }
+        .subscribe-btn {
+            background: #003366;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-size: 1em;
+            margin: 0 8px;
+            cursor: pointer;
+            width: 140px;
+            max-width: 100%;
+            transition: background 0.2s, color 0.2s;
+        }
+        .subscribe-btn:hover, .subscribe-btn:focus {
+            background: #FF0000;
+            color: #fff;
+        }
+        .subscribe-btn:active {
+            background: #990000;
+            color: #fff;
+        }
+        .footer-cta {
+            background: #FF0000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 32px;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .footer-cta:hover, .footer-cta:focus { background: #cc0000; }
+        .footer-cta:active { background: #990000; }
+        .section-title { font-size: 1.5em; font-weight: 700; margin-bottom: 18px; }
+        .routes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+        .route-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1 1 180px;
+            min-width: 160px;
+            max-width: 240px;
+        }
+        .route-block .route-btn {
+            width: 100%;
+        }
+        .route-block .route-desc {
+            font-size: 0.98em;
+            color: #444;
+            margin-top: 6px;
+            text-align: center;
+        }
+        .positioning { background: #f7f9fb; border-radius: 10px; padding: 28px 20px; margin-bottom: 32px; }
+        .positioning p { margin: 10px 0; font-size: 1.1em; }
+        .reviews { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 16px; }
+        .review { background: #f7f9fb; border-radius: 10px; padding: 18px 20px; flex: 1 1 260px; min-width: 220px; }
+        .review-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
+        .review-author { font-weight: 700; margin-top: 8px; }
+        .books-slider { display: flex; gap: 32px; margin-bottom: 24px; }
+        .book { background: #e0f7fa; border-radius: 8px; padding: 16px; flex: 1 1 180px; min-width: 160px; text-align: center; }
+        .book-img { width: 80px; height: 120px; background: #b2ebf2; border-radius: 4px; margin: 0 auto 12px auto; }
+        .book-title { font-weight: 600; margin-bottom: 8px; }
+        .book-btn { background: #FF0000; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 1em; cursor: pointer; }
+        .video-section { margin-bottom: 24px; }
+        .tools { background: #f7f9fb; border-radius: 10px; padding: 24px 20px; margin-bottom: 32px; text-align: center; }
+        .tools-btn { background: #FF0000; color: #fff; border: none; border-radius: 6px; padding: 14px 32px; font-size: 1.1em; cursor: pointer; margin-top: 12px; }
+        .subscribe { text-align: center; margin-bottom: 32px; }
+        .subscribe-btns { margin: 12px 0; }
+        .subscribe-btn { background: #003366; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-size: 1em; margin: 0 8px; cursor: pointer; width: 140px; max-width: 100%; }
+        .subscribe-note { color: #888; font-size: 0.95em; margin-top: 6px; }
+        footer { background: #f7f9fb; padding: 32px 0 16px 0; text-align: center; margin-top: 48px; }
+        .footer-cta { background: #FF0000; color: #fff; border: none; border-radius: 6px; padding: 14px 32px; font-size: 1.1em; margin-bottom: 18px; cursor: pointer; }
+        .footer-socials { margin: 12px 0; }
+        .footer-socials a { margin: 0 8px; color: #003366; }
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            min-height: 56px;
+        }
+        .main-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            width: 100%;
+            justify-content: center;
+        }
+        .main-nav-link {
+            color: #003366;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .main-nav-link:hover, .main-nav-link:focus {
+            background: #003366;
+            color: #fff;
+        }
+        .main-nav-link.active {
+            background: #FF0000;
+            color: #fff;
+        }
+        .main-nav-burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        .main-nav-burger span {
+            height: 4px;
+            background: #003366;
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        @media (max-width: 900px) {
+            .container { padding: 0 4vw; }
+            header.hero { flex-direction: column; padding: 24px 0; }
+            .hero-content { padding-left: 0; }
+            .hero-img img { width: 180px; }
+            .hero-title { font-size: 1.3em; }
+            .hero-subtitle { font-size: 1em; }
+            .hero-btns { display: flex; flex-direction: column; gap: 10px; }
+            .btn-red, .btn-blue { width: 100%; margin-right: 0; }
+            .books-slider { flex-direction: column; gap: 18px; }
+            .reviews { flex-direction: column; gap: 18px; }
+            .review { min-width: 0; }
+            .routes {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .route-block {
+                max-width: 100%;
+            }
+            .tools-btn { width: 100%; }
+            .subscribe-btns { display: flex; flex-direction: column; gap: 10px; }
+            .subscribe-btn { width: 100%; }
+            .main-nav-burger {
+                display: flex;
+            }
+            .main-nav-links {
+                display: none;
+                position: absolute;
+                top: 56px;
+                left: 0;
+                width: 100vw;
+                background: #fff;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                z-index: 2000;
+            }
+            .main-nav-links.open {
+                display: flex;
+            }
+            .main-nav-link {
+                width: 100%;
+                padding: 16px 0;
+                text-align: center;
+                border-radius: 0;
+                border-bottom: 1px solid #eee;
+            }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 2vw; }
+            .section { margin: 32px 0 0 0; padding: 0 0 20px 0; }
+            .section-title { font-size: 1.1em; }
+            .book-img { width: 60px; height: 90px; }
+        }
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            z-index: 3000;
+            background: #003366;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            font-size: 2em;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background 0.2s, color 0.2s, opacity 0.2s;
+            opacity: 0.85;
+        }
+        #scrollTopBtn:hover, #scrollTopBtn:focus {
+            background: #FF0000;
+            color: #fff;
+            opacity: 1;
+        }
+        @media (max-width: 600px) {
+            #scrollTopBtn {
+                right: 12px;
+                bottom: 12px;
+                width: 42px;
+                height: 42px;
+                font-size: 1.4em;
+            }
+        }
+        .site-footer {
+            background: #f7f9fb;
+            color: #003366;
+            font-size: 1em;
+            padding: 32px 0 18px 0;
+            margin-top: 48px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        .site-footer a { color: #003366; text-decoration: underline; }
+        .site-footer a:hover { color: #2563eb; }
+        .footer-main { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .footer-info { margin-bottom: 10px; }
+        .footer-links { margin-bottom: 10px; }
+        .footer-socials { margin-bottom: 10px; }
+        .footer-pay { color: #888; font-size: 0.97em; }
+        @media (max-width: 600px) {
+            .site-footer { font-size: 0.97em; padding: 22px 0 12px 0; }
+            .footer-main { padding: 0 4vw; }
+        }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Активный пункт меню
+        var links = document.querySelectorAll('.main-nav-link');
+        var path = window.location.pathname;
+        links.forEach(function(link) {
+            if (link.getAttribute('href') === path) {
+                link.classList.add('active');
+            }
+        });
+        // Бургер-меню
+        var burger = document.querySelector('.main-nav-burger');
+        var navLinks = document.querySelector('.main-nav-links');
+        if (burger && navLinks) {
+            burger.addEventListener('click', function() {
+                navLinks.classList.toggle('open');
+            });
+        }
+    });
+    </script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="main-nav-burger" tabindex="0" aria-label="Открыть меню">
+            <span style="width:100%"></span>
+            <span style="width:100%"></span>
+            <span style="width:100%"></span>
+        </div>
+        <div class="main-nav-links">
+            <a href="/" class="main-nav-link">Главная</a>
+            <a href="/about/" class="main-nav-link">Обо мне</a>
+            <a href="/services/" class="main-nav-link">Услуги</a>
+            <a href="/books/" class="main-nav-link">Книги</a>
+            <a href="/blog/" class="main-nav-link">Блог</a>
+            <a href="/videos/" class="main-nav-link">Видео</a>
+            <a href="/reviews/" class="main-nav-link">Отзывы</a>
+            <a href="/faq/" class="main-nav-link">FAQ</a>
+            <a href="/checklists/" class="main-nav-link">Чек-листы</a>
+            <a href="/tools/" class="main-nav-link">Инструменты</a>
+            <a href="/contacts/" class="main-nav-link">Контакты</a>
+            <a href="/cabinet/" class="main-nav-link">Личный кабинет</a>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div class="footer-info">
+                © 2025 Алексей Бородулин | Самозанятый | ИНН 772137891227<br>
+                Телефон: <a href="tel:+79169509084">+7 916 950-9084</a> | Email: <a href="mailto:info@borodulin.expert">info@borodulin.expert</a>
+            </div>
+            <div class="footer-links">
+                <a href="/privacy/">Политика конфиденциальности</a> |
+                <a href="/consent/">Согласие на обработку персональных данных</a>
+            </div>
+            <div class="footer-socials">
+                <a href="https://t.me/Borodulin_expert" target="_blank">Telegram</a> |
+                <a href="https://www.youtube.com/@Borodulin.expert" target="_blank">YouTube</a> |
+                <a href="https://vk.com/borodulin.expert" target="_blank">VK</a>
+            </div>
+            <div class="footer-pay">Оплата осуществляется через защищённый шлюз. Все права защищены.</div>
+        </div>
+    </footer>
+    <button id="scrollTopBtn" title="Вверх">&#8679;</button>
+    <script>
+    // Кнопка "Вверх"
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 200) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+    scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html> 

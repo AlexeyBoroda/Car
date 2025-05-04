@@ -1,0 +1,424 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{ seo.title|default:SEO_DEFAULTS.title }}{% endblock %}
+{% block description %}{{ seo.description|default:SEO_DEFAULTS.description }}{% endblock %}
+{% block keywords %}{{ seo.keywords|default:SEO_DEFAULTS.keywords }}{% endblock %}
+{% block og_title %}{{ seo.og_title|default:seo.title|default:SEO_DEFAULTS.og_title }}{% endblock %}
+{% block og_description %}{{ seo.og_description|default:seo.description|default:SEO_DEFAULTS.og_description }}{% endblock %}
+{% block og_image %}{% if seo.og_image %}{{ seo.og_image.url }}{% else %}{% static 'core/img/hero/hero.jpg' %}{% endif %}{% endblock %}
+{% block og_type %}{{ seo.og_type|default:SEO_DEFAULTS.og_type }}{% endblock %}
+{% block og_site_name %}{{ seo.og_site_name|default:SEO_DEFAULTS.og_site_name }}{% endblock %}
+{% block og_locale %}{{ seo.og_locale|default:SEO_DEFAULTS.og_locale }}{% endblock %}
+{% block og_url %}{{ seo.og_url|default:SEO_DEFAULTS.og_url }}{% endblock %}
+{% block twitter_card %}{{ seo.twitter_card|default:SEO_DEFAULTS.twitter_card }}{% endblock %}
+{% block twitter_site %}{{ seo.twitter_site|default:SEO_DEFAULTS.twitter_site }}{% endblock %}
+{% block twitter_creator %}{{ seo.twitter_creator|default:SEO_DEFAULTS.twitter_creator }}{% endblock %}
+{% block canonical %}{{ seo.canonical|default:SEO_DEFAULTS.canonical }}{% endblock %}
+{% block robots %}{{ seo.robots|default:SEO_DEFAULTS.robots }}{% endblock %}
+{% block author %}{{ seo.author|default:SEO_DEFAULTS.author }}{% endblock %}
+{% block schema_jsonld %}{{ seo.schema_jsonld|safe }}{% endblock %}
+{% block custom_meta %}{{ seo.custom_meta|safe }}{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Hero-блок -->
+    <section class="hero-proto">
+        <div class="hero-proto-img">
+            <img src="{% static 'core/img/hero/hero.png' %}" alt="Алексей Бородулин">
+        </div>
+        <div class="hero-proto-content">
+            <div class="hero-proto-title">30 лет в банках.<br>15 лет в бизнесе.</div>
+            <div class="hero-proto-subtitle">Помогаю запустить своё дело с уверенностью.</div>
+            <div class="hero-proto-desc">Пройди путь предприниматель честно — без иллюзий, с поддержкой на каждом этапе.</div>
+            <div class="hero-proto-btns">
+                <a href="/services/" class="btn-red">Хочу начать бизнес</a>
+                <a href="/videos/" class="btn-blue">Посмотреть видео</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- С чего начать -->
+    <section class="start-section" style="padding-bottom:0; margin-bottom:0;">
+        <div class="section-title" style="margin-bottom:10px;">С чего начать?</div>
+        <div class="start-cards" style="gap:10px;">
+            <a href="/checklists/" class="start-card">
+                <div class="start-card-icon" style="background:#e3f1ff; color:#2563eb;">&#10003;</div>
+                <div>
+                    <span class="start-card-title">Пройди тест</span>
+                    <span class="start-card-desc">— За 3 минуты узнаешь, к чему ты готов.</span>
+                </div>
+            </a>
+            <a href="/blog/" class="start-card">
+                <div class="start-card-icon" style="background:#e3f1ff; color:#2563eb;">&#128214;</div>
+                <div>
+                    <span class="start-card-title">Прочитай статью</span>
+                    <span class="start-card-desc">— инструкция для тех, кто только задумывается.</span>
+                </div>
+            </a>
+            <a href="/videos/" class="start-card">
+                <div class="start-card-icon" style="background:#e3f1ff; color:#2563eb;">&#9654;&#65039;</div>
+                <div>
+                    <span class="start-card-title">Посмотри видео</span>
+                    <span class="start-card-desc">— реальные истории и разборы ошибок.</span>
+                </div>
+            </a>
+        </div>
+    </section>
+    <hr class="section-hr" style="margin-bottom:0;">
+    <section class="section" style="margin-top:0; padding-top:0;">
+        <div class="section-title" style="margin-top:16px;">Отзывы</div>
+        <style>
+            .main-reviews-proto {
+                display: flex;
+                gap: 32px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .main-review-proto {
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+                padding: 18px 18px 12px 18px;
+                flex: 1 1 220px;
+                min-width: 220px;
+                max-width: 260px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 18px;
+            }
+            .main-review-proto-img {
+                width: 120px;
+                height: 120px;
+                object-fit: contain;
+                background: #fff;
+                border: 1.5px solid #e0e0e0;
+                margin-bottom: 12px;
+                display: block;
+            }
+        </style>
+        <div class="main-reviews-proto">
+            {% for review in reviews|slice:":3" %}
+            <div class="main-review-proto">
+                {% if review.image %}
+                    <img class="main-review-proto-img" src="{{ review.image.url }}" alt="{{ review.author }}">
+                {% endif %}
+                <div class="review-proto-author" style="font-weight:700; margin-bottom:2px; color:#183153;">{{ review.author }}</div>
+                <div class="review-proto-text" style="font-size:1em; color:#222; margin-bottom:0;">«{{ review.text }}»</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align:left; margin-top:18px;">
+            <a href="/reviews/" class="btn-blue">Посмотреть больше кейсов</a>
+        </div>
+    </section>
+    <section class="section new-materials" style="margin-top:16px;">
+        <div class="section-title" style="margin-top:0;">Новые материалы</div>
+        <div class="new-materials-cards">
+            <a href="/videos/" class="new-material-card">
+                <div class="new-material-emoji" style="background:#e3f1ff; color:#2563eb;">▶️</div>
+                <div>
+                    <span class="new-material-title">Видео</span>
+                    <span class="new-material-desc">— Как начать бизнес с нуля</span>
+                </div>
+            </a>
+            <a href="/books/" class="new-material-card">
+                <div class="new-material-emoji" style="background:#e3f1ff; color:#2563eb;">📚</div>
+                <div>
+                    <span class="new-material-title">Книга</span>
+                    <span class="new-material-desc">— Компас для предпринимателя</span>
+                </div>
+            </a>
+            <a href="/blog/" class="new-material-card">
+                <div class="new-material-emoji" style="background:#e3f1ff; color:#2563eb;">📰</div>
+                <div>
+                    <span class="new-material-title">Статья</span>
+                    <span class="new-material-desc">— 5 ошибок старта бизнеса</span>
+                </div>
+            </a>
+        </div>
+    </section>
+    <section class="section business-tools">
+        <div class="section-title">Онлайн-инструменты для бизнеса</div>
+        <div class="business-tools-cards">
+            <a href="/tools/" class="business-tool-card">
+                <div class="business-tool-emoji" style="background:#e3f1ff; color:#2563eb;">📝</div>
+                <div>
+                    <span class="business-tool-title">Тесты</span>
+                    <span class="business-tool-desc">— Быстрое определение сильных и слабых сторон бизнеса.</span>
+                </div>
+            </a>
+            <a href="/tools/" class="business-tool-card">
+                <div class="business-tool-emoji" style="background:#e3f1ff; color:#2563eb;">📊</div>
+                <div>
+                    <span class="business-tool-title">Бизнес-план</span>
+                    <span class="business-tool-desc">— Удобный онлайн-конструктор для создания бизнес-плана.</span>
+                </div>
+            </a>
+            <a href="/tools/" class="business-tool-card">
+                <div class="business-tool-emoji" style="background:#e3f1ff; color:#2563eb;">📈</div>
+                <div>
+                    <span class="business-tool-title">Маркетинговые таблицы</span>
+                    <span class="business-tool-desc">— Готовые шаблоны для расчётов и анализа рынка.</span>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+.hero-proto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fff;
+    padding: 40px 0 32px 0;
+    border-bottom: 1px solid #e0e0e0;
+    gap: 32px;
+}
+.hero-proto-img {
+    flex: 1 1 320px;
+    min-width: 240px;
+    text-align: center;
+}
+.hero-proto-img img {
+    width: 260px;
+    border-radius: 12px;
+}
+.hero-proto-content {
+    flex: 2 1 400px;
+    min-width: 260px;
+    padding-left: 32px;
+}
+.hero-proto-title {
+    font-size: 2.6em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #183153;
+}
+.hero-proto-subtitle {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #2563eb;
+}
+.hero-proto-desc {
+    font-size: 1.1em;
+    margin-bottom: 24px;
+    color: #222;
+}
+.hero-proto-btns {
+    display: flex;
+    gap: 16px;
+}
+.start-section {
+    margin: 48px 0 0 0;
+    padding: 0 0 32px 0;
+}
+.start-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+.start-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #f4f8fd;
+    border-radius: 12px;
+    padding: 18px 24px;
+    flex: 1 1 260px;
+    min-width: 220px;
+    text-decoration: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.start-card:hover, .start-card:focus {
+    background: #e3f1ff;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+}
+.start-card-icon {
+    font-size: 2em;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.start-card-title {
+    font-weight: 700;
+    color: #183153;
+    font-size: 1.1em;
+}
+.start-card-desc {
+    color: #222;
+    font-size: 1em;
+    margin-left: 4px;
+}
+.reviews-proto {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+.review-proto {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    padding: 18px 18px 12px 18px;
+    flex: 1 1 220px;
+    min-width: 180px;
+    max-width: 260px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.review-proto-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.review-proto-author {
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #183153;
+}
+.review-proto-city {
+    font-size: 0.98em;
+    color: #888;
+    margin-bottom: 8px;
+}
+.review-proto-text {
+    font-size: 1em;
+    color: #222;
+    margin-bottom: 0;
+}
+@media (max-width: 900px) {
+    .hero-proto { flex-direction: column; padding: 24px 0; }
+    .hero-proto-content { padding-left: 0; }
+    .hero-proto-img img { width: 180px; }
+    .hero-proto-title { font-size: 1.5em; }
+    .hero-proto-subtitle { font-size: 1em; }
+    .hero-proto-btns { flex-direction: column; gap: 10px; }
+    .btn-red, .btn-blue { width: 100%; margin-right: 0; }
+    .start-cards { flex-direction: column; gap: 12px; }
+    .reviews-proto { flex-direction: column; gap: 12px; }
+}
+@media (max-width: 600px) {
+    .container { padding: 0 2vw; }
+    .section { margin: 32px 0 0 0; padding: 0 0 20px 0; }
+    .section-title { font-size: 1.1em; }
+    .start-card { padding: 14px 10px; }
+    .review-proto-img { width: 56px; height: 56px; }
+}
+.section-hr {
+    border: none;
+    border-top: 1.5px solid #e0e0e0;
+    margin: 18px 0 0 0;
+    width: 100%;
+}
+.new-materials {
+    margin-top: 32px;
+}
+.new-materials-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+}
+.new-material-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #f4f8fd;
+    border-radius: 12px;
+    padding: 18px 24px;
+    min-width: 0;
+    text-decoration: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.new-material-card:hover, .new-material-card:focus {
+    background: #e3f1ff;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+}
+.new-material-emoji {
+    font-size: 2em;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.new-material-title {
+    font-weight: 700;
+    color: #183153;
+    font-size: 1.1em;
+}
+.new-material-desc {
+    color: #222;
+    font-size: 1em;
+    margin-left: 4px;
+}
+@media (max-width: 900px) {
+    .new-materials-cards { grid-template-columns: 1fr; gap: 12px; }
+}
+.business-tools {
+    margin-top: 32px;
+}
+.business-tools-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+}
+.business-tool-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #f4f8fd;
+    border-radius: 12px;
+    padding: 18px 24px;
+    min-width: 0;
+    text-decoration: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.business-tool-card:hover, .business-tool-card:focus {
+    background: #e3f1ff;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+}
+.business-tool-emoji {
+    font-size: 2em;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.business-tool-title {
+    font-weight: 700;
+    color: #183153;
+    font-size: 1.1em;
+}
+.business-tool-desc {
+    color: #222;
+    font-size: 1em;
+    margin-left: 4px;
+}
+@media (max-width: 900px) {
+    .business-tools-cards { grid-template-columns: 1fr; gap: 12px; }
+}
+</style>
+{% endblock %} 
