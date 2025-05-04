@@ -1,0 +1,10 @@
+
+PS C:\Users\Borodulinav\Downloads\111\borodulin.expert>    docker-compose up --build
+
+
+PS C:\Users\Borodulinav\Downloads\111\borodulin.expert> docker compose restart web
+
+
+Просмотр актуальных сохранений
+git log --pretty=format:"%h %ad | %s" --date=short
+
