@@ -5,7 +5,12 @@ from django.urls import path
 from .models import Review, SeoSettings
 
 # Register your models here.
-admin.site.register(Review)
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("author", "review_type", "created_at")
+    list_filter = ("review_type", "created_at")
+    search_fields = ("author", "text")
 
 @admin.register(SeoSettings)
 class SeoSettingsAdmin(admin.ModelAdmin):

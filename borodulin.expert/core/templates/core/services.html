@@ -1,4 +1,320 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
-<div class="container"><h1>Услуги</h1><p>Здесь будет информация о консультациях, тренингах, менторстве и форма заявки.</p></div>
+<div class="container" style="max-width:900px; margin:0 auto; padding:32px 0;">
+    <h1 style="font-size:2em; font-weight:700; margin-bottom:8px; text-align:center;">Услуги бизнес-тренера: рост, стратегия, результат</h1>
+    <div style="font-size:1.2em; color:#2563eb; margin-bottom:18px; text-align:justify;">Работаю с предпринимателями, руководителями и командами. Помогаю находить ростовые точки, усиливать команду и достигать цели быстрее.</div>
+    <div style="font-size:1.08em; color:#222; margin-bottom:28px; text-align:justify;">Я — Алексей Бородулин, бизнес-тренер, предприниматель и финансист с 30-летним опытом. Провожу индивидуальные и корпоративные программы, которые помогают расти и не сдаваться даже в кризис.</div>
+    <div class="section-title" style="margin-bottom:12px;">Выберите подходящую услугу:</div>
+    <div class="services-cards" style="display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:36px;">
+        <!-- Коучинг -->
+        <div class="service-card" style="background:#f4f8fd; border-radius:12px; padding:24px 20px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column; align-items:flex-start;">
+            <div style="font-size:2em; margin-bottom:8px;">✅</div>
+            <div class="service-title" style="font-weight:700; font-size:1.15em; margin-bottom:6px;">Индивидуальный коучинг</div>
+            <div style="color:#222; font-size:1em; margin-bottom:10px; text-align:justify;">1:1 работа с фокусом на управленческие и личные задачи. Результат — ясность, уверенность, решения.</div>
+            <a href="/services/coaching/" class="btn-blue" style="margin-bottom:10px;">Подробнее</a>
+            {% if reviews_by_type.coaching %}
+            <div class="service-review" style="background:#fff; border-radius:8px; padding:12px 14px; font-size:0.98em; color:#222; margin-top:8px; box-shadow:0 1px 4px rgba(0,0,0,0.03); width:100%; max-width:100%; box-sizing:border-box;">
+                {% if reviews_by_type.coaching.image %}
+                <img src="{{ reviews_by_type.coaching.image.url }}" alt="{{ reviews_by_type.coaching.author }}" style="width:48px; height:48px; object-fit:cover; border-radius:50%; float:left; margin-right:12px; margin-bottom:8px;">
+                {% endif %}
+                <div style="overflow:hidden; width:calc(100% - 60px); float:right;">
+                    <span style="color:#183153; font-weight:600;">{{ reviews_by_type.coaching.author }}:</span>
+                    <div style="position:relative;">
+                        <div style="max-height:2.8em; overflow:hidden; line-height:1.4;">
+                            «{{ reviews_by_type.coaching.text|truncatechars:70 }}»
+                        </div>
+                        <a href="/reviews/#review-{{ reviews_by_type.coaching.id }}" style="color:#2563eb; text-decoration:none; display:block; margin-top:4px;">далее</a>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Тренинги -->
+        <div class="service-card" style="background:#f4f8fd; border-radius:12px; padding:24px 20px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column; align-items:flex-start;">
+            <div style="font-size:2em; margin-bottom:8px;">👥</div>
+            <div class="service-title" style="font-weight:700; font-size:1.15em; margin-bottom:6px;">Корпоративные тренинги</div>
+            <div style="color:#222; font-size:1em; margin-bottom:10px; text-align:justify;">Тренинги для команд: про лидерство, продажи, коммуникацию и результат. Сценарий — под ваши задачи.</div>
+            <a href="/services/training/" class="btn-blue" style="margin-bottom:10px;">Подробнее</a>
+            {% if reviews_by_type.training %}
+            <div class="service-review" style="background:#fff; border-radius:8px; padding:12px 14px; font-size:0.98em; color:#222; margin-top:8px; box-shadow:0 1px 4px rgba(0,0,0,0.03); width:100%; max-width:100%; box-sizing:border-box;">
+                {% if reviews_by_type.training.image %}
+                <img src="{{ reviews_by_type.training.image.url }}" alt="{{ reviews_by_type.training.author }}" style="width:48px; height:48px; object-fit:cover; border-radius:50%; float:left; margin-right:12px; margin-bottom:8px;">
+                {% endif %}
+                <div style="overflow:hidden; width:calc(100% - 60px); float:right;">
+                    <span style="color:#183153; font-weight:600;">{{ reviews_by_type.training.author }}:</span>
+                    <div style="position:relative;">
+                        <div style="max-height:2.8em; overflow:hidden; line-height:1.4;">
+                            «{{ reviews_by_type.training.text|truncatechars:70 }}»
+                        </div>
+                        <a href="/reviews/#review-{{ reviews_by_type.training.id }}" style="color:#2563eb; text-decoration:none; display:block; margin-top:4px;">далее</a>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- МК и семинары -->
+        <div class="service-card" style="background:#f4f8fd; border-radius:12px; padding:24px 20px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column; align-items:flex-start;">
+            <div style="font-size:2em; margin-bottom:8px;">🎤</div>
+            <div class="service-title" style="font-weight:700; font-size:1.15em; margin-bottom:6px;">Мастер-классы и семинары</div>
+            <div style="color:#222; font-size:1em; margin-bottom:10px; text-align:justify;">Открытые и корпоративные мероприятия. Живой формат, прикладные инструменты и энергия.</div>
+            <a href="/services/masterclass/" class="btn-blue" style="margin-bottom:10px;">Подробнее</a>
+            {% if reviews_by_type.masterclass %}
+            <div class="service-review" style="background:#fff; border-radius:8px; padding:12px 14px; font-size:0.98em; color:#222; margin-top:8px; box-shadow:0 1px 4px rgba(0,0,0,0.03); width:100%; max-width:100%; box-sizing:border-box;">
+                {% if reviews_by_type.masterclass.image %}
+                <img src="{{ reviews_by_type.masterclass.image.url }}" alt="{{ reviews_by_type.masterclass.author }}" style="width:48px; height:48px; object-fit:cover; border-radius:50%; float:left; margin-right:12px; margin-bottom:8px;">
+                {% endif %}
+                <div style="overflow:hidden; width:calc(100% - 60px); float:right;">
+                    <span style="color:#183153; font-weight:600;">{{ reviews_by_type.masterclass.author }}:</span>
+                    <div style="position:relative;">
+                        <div style="max-height:2.8em; overflow:hidden; line-height:1.4;">
+                            «{{ reviews_by_type.masterclass.text|truncatechars:70 }}»
+                        </div>
+                        <a href="/reviews/#review-{{ reviews_by_type.masterclass.id }}" style="color:#2563eb; text-decoration:none; display:block; margin-top:4px;">далее</a>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Консультации -->
+        <div class="service-card" style="background:#f4f8fd; border-radius:12px; padding:24px 20px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column; align-items:flex-start;">
+            <div style="font-size:2em; margin-bottom:8px;">📈</div>
+            <div class="service-title" style="font-weight:700; font-size:1.15em; margin-bottom:6px;">Консультации для предпринимателей</div>
+            <div style="color:#222; font-size:1em; margin-bottom:10px; text-align:justify;">Разовые и комплексные консультации по запуску, масштабированию, финансам и стратегиям. Для старта и роста.</div>
+            <a href="/services/consulting/" class="btn-blue" style="margin-bottom:10px;">Подробнее</a>
+            {% if reviews_by_type.consulting %}
+            <div class="service-review" style="background:#fff; border-radius:8px; padding:12px 14px; font-size:0.98em; color:#222; margin-top:8px; box-shadow:0 1px 4px rgba(0,0,0,0.03); width:100%; max-width:100%; box-sizing:border-box;">
+                {% if reviews_by_type.consulting.image %}
+                <img src="{{ reviews_by_type.consulting.image.url }}" alt="{{ reviews_by_type.consulting.author }}" style="width:48px; height:48px; object-fit:cover; border-radius:50%; float:left; margin-right:12px; margin-bottom:8px;">
+                {% endif %}
+                <div style="overflow:hidden; width:calc(100% - 60px); float:right;">
+                    <span style="color:#183153; font-weight:600;">{{ reviews_by_type.consulting.author }}:</span>
+                    <div style="position:relative;">
+                        <div style="max-height:2.8em; overflow:hidden; line-height:1.4;">
+                            «{{ reviews_by_type.consulting.text|truncatechars:70 }}»
+                        </div>
+                        <a href="/reviews/#review-{{ reviews_by_type.consulting.id }}" style="color:#2563eb; text-decoration:none; display:block; margin-top:4px;">далее</a>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="cta-block" style="background:#e3f1ff; border-radius:12px; padding:28px 24px; text-align:center; margin-bottom:32px;">
+        <div style="font-size:1.18em; font-weight:600; color:#183153; margin-bottom:10px;">Готовы обсудить задачу и выбрать формат работы?</div>
+        <div style="font-size:1.05em; color:#222; margin-bottom:18px;">Оставьте заявку — я свяжусь с вами в течение 24 часов.</div>
+        <button class="btn-red" onclick="document.getElementById('service-form').scrollIntoView({behavior:'smooth'});">Оставить заявку</button>
+    </div>
+    <form id="service-form" method="post" style="background:#f7f9fb; border-radius:12px; padding:28px 24px; max-width:500px; margin:0 auto;">
+        {% csrf_token %}
+        <div style="font-size:1.2em; font-weight:600; margin-bottom:18px; color:#183153;">Заявка на консультацию или тренинг</div>
+        <div style="margin-bottom:14px;">
+            <label for="name">Имя*:</label><br>
+            <input type="text" id="name" name="name" required placeholder="Иван Иванов" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+            <div id="name-error" class="form-error"></div>
+        </div>
+        <div style="margin-bottom:14px;">
+            <label for="phone">Телефон*:</label><br>
+            <input type="tel" id="phone" name="phone" required placeholder="+7 XXX XXX-XX-XX" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+            <div id="phone-error" class="form-error"></div>
+        </div>
+        <div style="margin-bottom:14px;">
+            <label for="company">Компания:</label><br>
+            <input type="text" id="company" name="company" placeholder="ООО &quot;Мой бизнес&quot;" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+            <div id="company-error" class="form-error"></div>
+        </div>
+        <div style="margin-bottom:18px;">
+            <label for="service">Интересующая услуга:</label><br>
+            <select id="service" name="service" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+                <option value="">Не выбрано</option>
+                <option value="coaching">Индивидуальный коучинг</option>
+                <option value="training">Корпоративные тренинги</option>
+                <option value="masterclass">Мастер-классы и семинары</option>
+                <option value="consulting">Консультации для предпринимателей</option>
+            </select>
+            <div id="service-error" class="form-error"></div>
+        </div>
+        <div style="margin-bottom:18px;">
+            <div class="g-recaptcha" data-sitekey="6LdcBi8rAAAAAEWSZaB_4KlJs5D5CWXWU5ItS0B3"></div>
+            <div id="captcha-error" style="color:#d00; font-size:0.98em; display:none; margin-top:6px;">Пожалуйста, подтвердите, что вы не робот.</div>
+        </div>
+        <button type="submit" class="btn-blue" style="width:100%; font-size:1.1em;">Отправить заявку</button>
+    </form>
+</div>
+<!-- Модальное окно успешной отправки -->
+<div id="success-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:14px; max-width:340px; margin:auto; padding:32px 18px 22px 18px; box-shadow:0 4px 32px rgba(0,0,0,0.13); text-align:center; position:relative;">
+    <img src="{% static 'core/img/hero/hero.png' %}" alt="Алексей Бородулин" style="width:84px; height:84px; object-fit:cover; border-radius:50%; margin-bottom:16px; border:3px solid #2563eb;">
+    <div style="font-size:1.15em; font-weight:600; color:#183153; margin-bottom:8px;">Спасибо! Ваша заявка отправлена.</div>
+    <div style="font-size:1em; color:#222; margin-bottom:16px;">Я свяжусь с вами в ближайшее время.</div>
+    <button onclick="closeSuccessModal()" style="background:#2563eb; color:#fff; border:none; border-radius:6px; padding:8px 22px; font-size:1em; cursor:pointer;">Закрыть</button>
+  </div>
+</div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+}
+function hideError(id) {
+    const el = document.getElementById(id);
+    el.style.display = 'none';
+}
+// Маска для телефона: +7 XXX XXX-XX-XX, только цифры, автоформатирование
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', function(e) {
+    let val = phoneInput.value.replace(/\D/g, '');
+    if (val.startsWith('8')) val = '7' + val.slice(1);
+    if (!val.startsWith('7')) val = '7' + val;
+    let formatted = '+7';
+    if (val.length > 1) formatted += ' ' + val.slice(1, 4);
+    if (val.length > 4) formatted += ' ' + val.slice(4, 7);
+    if (val.length > 7) formatted += '-' + val.slice(7, 9);
+    if (val.length > 9) formatted += '-' + val.slice(9, 11);
+    phoneInput.value = formatted.trim();
+});
+document.getElementById('service-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    let valid = true;
+    // Имя: только кириллица, первая буква заглавная
+    const name = form.name.value.trim();
+    if (!/^([А-ЯЁ][а-яё]+)(\s[А-ЯЁ][а-яё]+)*$/.test(name)) {
+        showError('name-error', 'Имя должно быть на кириллице и начинаться с заглавной буквы.');
+        valid = false;
+    } else {
+        hideError('name-error');
+    }
+    // Телефон: только цифры, формат +7 XXX XXX-XX-XX
+    const phone = form.phone.value.trim();
+    if (!/^\+7 \d{3} \d{3}-\d{2}-\d{2}$/.test(phone)) {
+        showError('phone-error', 'Телефон должен быть в формате +7 XXX XXX-XX-XX.');
+        valid = false;
+    } else {
+        hideError('phone-error');
+    }
+    // Компания: только первая буква первого слова заглавная кириллица
+    const company = form.company.value.trim();
+    if (company && !/^[А-ЯЁ][а-яё]+.*$/.test(company)) {
+        showError('company-error', 'Название компании должно начинаться с заглавной кириллической буквы.');
+        valid = false;
+    } else {
+        hideError('company-error');
+    }
+    // Проверка выбора услуги
+    const service = form.service.value.trim();
+    if (!service) {
+        showError('service-error', 'Пожалуйста, выберите услугу.');
+        valid = false;
+    } else {
+        hideError('service-error');
+    }
+    // reCAPTCHA
+    const captcha = grecaptcha.getResponse();
+    if (!captcha) {
+        document.getElementById('captcha-error').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('captcha-error').style.display = 'none';
+    }
+    if (!valid) return;
+    const data = new FormData(form);
+    data.append('g-recaptcha-response', captcha);
+    const response = await fetch(window.location.pathname, {
+        method: 'POST',
+        body: data,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    });
+    if (response.ok) {
+        form.reset();
+        grecaptcha.reset();
+        showSuccessModal();
+    }
+};
+function showSuccessModal() {
+    document.getElementById('success-modal').style.display = 'flex';
+}
+function closeSuccessModal() {
+    document.getElementById('success-modal').style.display = 'none';
+}
+</script>
+<style>
+@media (max-width: 900px) {
+    .services-cards { grid-template-columns:1fr; gap:18px; }
+    .service-card { padding:18px 10px; }
+}
+.form-error { color: #d00; font-size: 0.98em; display: none; margin-top: 4px; }
+input::placeholder {
+    color: #888;
+    opacity: 1;
+}
+@media (max-width: 600px) {
+    .container { padding: 8px 0; }
+    .services-cards {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+    .service-card {
+        padding: 12px 6px;
+        border-radius: 8px;
+        font-size: 0.98em;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+    .service-title {
+        font-size: 1em;
+        margin-bottom: 6px;
+    }
+    .service-card > div[style*='font-size:2em'] {
+        font-size: 1.4em !important;
+        margin-bottom: 4px !important;
+    }
+    .service-review {
+        padding: 8px 6px;
+        font-size: 0.95em;
+    }
+    .service-review img {
+        width: 36px !important;
+        height: 36px !important;
+        margin-right: 8px !important;
+        margin-bottom: 4px !important;
+    }
+    .service-review span {
+        font-size: 0.98em;
+    }
+    .btn-blue, .btn-red {
+        font-size: 1em !important;
+        padding: 8px 18px !important;
+        border-radius: 6px !important;
+    }
+    .cta-block {
+        padding: 16px 6px;
+        font-size: 0.98em;
+    }
+    #service-form {
+        padding: 14px 6px;
+        max-width: 100%;
+    }
+    #success-modal > div {
+        max-width: 90vw;
+        padding: 18px 6px 12px 6px;
+    }
+}
+.service-title {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-bottom: 8px;
+}
+</style>
 {% endblock %} 

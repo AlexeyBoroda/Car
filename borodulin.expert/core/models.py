@@ -3,10 +3,18 @@ from django.db import models
 # Create your models here.
 
 class Review(models.Model):
+    REVIEW_TYPE_CHOICES = [
+        ('common', 'Общий'),
+        ('coaching', 'Коучинг'),
+        ('training', 'Тренинг'),
+        ('masterclass', 'МК и семинары'),
+        ('consulting', 'Консультации'),
+    ]
     author = models.CharField(max_length=100, verbose_name='Автор')
     text = models.TextField(verbose_name='Текст отзыва')
     image = models.ImageField(upload_to='review/', verbose_name='Фото', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата размещения')
+    review_type = models.CharField(max_length=20, choices=REVIEW_TYPE_CHOICES, default='common', verbose_name='Тип отзыва')
 
     def __str__(self):
         return f'{self.author}: {self.text[:30]}...'

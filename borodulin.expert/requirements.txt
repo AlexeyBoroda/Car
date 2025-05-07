@@ -7,3 +7,4 @@ telethon
 python-dotenv
 gunicorn 
 Pillow
+requests

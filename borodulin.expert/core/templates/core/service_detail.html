@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container" style="max-width:900px; margin:0 auto; padding:32px 0;">
+    <h1 style="font-size:2.2em; font-weight:700; margin-bottom:8px; text-align:center;">{{ service.title }}</h1>
+    <div style="font-size:1.2em; color:#2563eb; margin-bottom:18px; text-align:center;">{{ service.subtitle }}</div>
+    <div style="background:#f4f8fd; border-radius:12px; padding:24px 24px 12px 24px; margin-bottom:28px;">
+        <div style="font-size:1.1em; color:#222; margin-bottom:16px;">{{ service.description }}</div>
+        <div style="display:flex; flex-wrap:wrap; gap:32px;">
+            <div style="flex:1; min-width:220px;">
+                <div style="font-weight:600; color:#183153; margin-bottom:6px;">Темы:</div>
+                <ul style="margin:0 0 12px 0; padding-left:18px; color:#222;">
+                    {% for topic in service.topics %}
+                    <li>{{ topic }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div style="flex:1; min-width:220px;">
+                <div style="font-weight:600; color:#183153; margin-bottom:6px;">Преимущества:</div>
+                <ul style="margin:0 0 12px 0; padding-left:18px; color:#222;">
+                    {% for adv in service.advantages %}
+                    <li>{{ adv }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div style="flex:1; min-width:220px;">
+                <div style="font-weight:600; color:#183153; margin-bottom:6px;">Формат и длительность:</div>
+                <ul style="margin:0 0 12px 0; padding-left:18px; color:#222;">
+                    {% for f in service.format %}
+                    <li>{{ f }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% if service.price %}
+        <div style="margin-top:12px; font-weight:600; color:#2563eb;">Стоимость: {{ service.price }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Отзывы -->
+    <div style="margin-bottom:32px;">
+        <div style="font-size:1.15em; font-weight:600; color:#183153; margin-bottom:12px;">Отзывы клиентов</div>
+        <div class="reviews-list" style="display:grid; gap:20px;">
+            {% for review in reviews %}
+            <div class="review-card" style="background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.04);">
+                <div style="display:flex; gap:16px; margin-bottom:10px; align-items:center;">
+                    {% if review.image %}
+                    <img src="{{ review.image.url }}" alt="{{ review.author }}" style="width:56px; height:56px; object-fit:cover; border-radius:50%;">
+                    {% endif %}
+                    <div>
+                        <div style="font-weight:600; color:#183153;">{{ review.author }}</div>
+                        <div style="color:#666; font-size:0.95em;">{{ review.created_at|date:"d.m.Y" }}</div>
+                    </div>
+                </div>
+                <div style="color:#222; font-size:1.05em; line-height:1.5;">«{{ review.text }}»</div>
+            </div>
+            {% empty %}
+            <div style="color:#888;">Пока нет отзывов по этой услуге.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center; margin-top:24px;">
+        <a href="#service-form" class="btn-red" style="font-size:1.15em; padding:14px 38px; border-radius:8px;">{{ service.cta }}</a>
+    </div>
+</div>
+
+<style>
+@media (max-width: 900px) {
+    .container { padding:18px 0; }
+    .reviews-list { gap:14px; }
+}
+@media (max-width: 600px) {
+    .container { padding:8px 0; }
+    .reviews-list { gap:8px; }
+    .review-card { padding:12px; }
+}
+</style>
+{% endblock %} 
